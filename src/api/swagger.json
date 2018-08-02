@@ -1,0 +1,567 @@
+{
+  "swagger": "2.0",
+  "host": "",
+  "info": {
+      "title": "",
+      "description": "",
+      "version": ""
+  },
+  "basePath": "",
+  "consumes": [
+      "application/json"
+  ],
+  "produces": [
+      "application/json"
+  ],
+  "schemes": [],
+  "tags": [
+      {
+          "name": "Info"
+      },
+      {
+          "name": "Author"
+      },
+      {
+          "name": "Book"
+      }
+  ],
+  "paths": {
+      "/": {
+          "get": {
+              "tags": [
+                  "Info"
+              ],
+              "summary": "Show API information",
+              "description": "This is a public route",
+              "operationId": "showApiInfo",
+              "responses": {
+                  "200": {
+                      "description": "ok"
+                  }
+              }
+          }
+      },
+      "/authors": {
+          "get": {
+              "tags": [
+                  "Author"
+              ],
+              "summary": "List all authors",
+              "description": "Returns all authors",
+              "operationId": "FindAllAuthors",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "ok",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              },
+                              "data": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/definitions/Author"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "Author"
+              ],
+              "summary": "Create new author",
+              "description": "",
+              "operationId": "CreateAuthor",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "parameters": [
+                  {
+                      "in": "body",
+                      "name": "body",
+                      "description": "Author object that needs to be added to the database",
+                      "required": true,
+                      "schema": {
+                          "$ref": "#/definitions/NewAuthor"
+                      }
+                  }
+              ],
+              "responses": {
+                  "201": {
+                      "description": "created",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              },
+                              "data": {
+                                  "$ref": "#/definitions/Author"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/authors/{id}": {
+          "get": {
+              "tags": [
+                  "Author"
+              ],
+              "summary": "Get author",
+              "description": "Returns the given author",
+              "operationId": "FindAuthor",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of author to return",
+                      "required": true,
+                      "type": "integer",
+                      "format": "int64"
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "ok",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              },
+                              "data": {
+                                  "$ref": "#/definitions/Author"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "Author"
+              ],
+              "summary": "Update author",
+              "description": "Updates the given author",
+              "operationId": "UpdateAuthor",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of author to update",
+                      "required": true,
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  {
+                      "in": "body",
+                      "name": "body",
+                      "description": "Author object that needs to be added to the database",
+                      "required": true,
+                      "schema": {
+                          "$ref": "#/definitions/NewAuthor"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "ok",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              },
+                              "data": {
+                                  "$ref": "#/definitions/Author"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "Author"
+              ],
+              "summary": "Delete author",
+              "description": "Removes the given author",
+              "operationId": "DeleteAuthor",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of author to delete",
+                      "required": true,
+                      "type": "integer",
+                      "format": "int64"
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "ok",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/books": {
+          "get": {
+              "tags": [
+                  "Book"
+              ],
+              "summary": "List all books",
+              "description": "Returns all books",
+              "operationId": "FindAllBooks",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "ok",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              },
+                              "data": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/definitions/Book"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "Book"
+              ],
+              "summary": "Create new book",
+              "description": "",
+              "operationId": "CreateBook",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "parameters": [
+                  {
+                      "in": "body",
+                      "name": "body",
+                      "description": "Book object that needs to be added to the database",
+                      "required": true,
+                      "schema": {
+                          "$ref": "#/definitions/NewBook"
+                      }
+                  }
+              ],
+              "responses": {
+                  "201": {
+                      "description": "created",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              },
+                              "data": {
+                                  "$ref": "#/definitions/Book"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/books/{id}": {
+          "get": {
+              "tags": [
+                  "Book"
+              ],
+              "summary": "Get book",
+              "description": "Returns the given book",
+              "operationId": "FindBook",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of book to return",
+                      "required": true,
+                      "type": "integer",
+                      "format": "int64"
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "ok",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              },
+                              "data": {
+                                  "$ref": "#/definitions/Book"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "Book"
+              ],
+              "summary": "Update book",
+              "description": "Updates the given book",
+              "operationId": "UpdateBook",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of book to update",
+                      "required": true,
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  {
+                      "in": "body",
+                      "name": "body",
+                      "description": "Book object that needs to be added to the database",
+                      "required": true,
+                      "schema": {
+                          "$ref": "#/definitions/NewBook"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "ok",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              },
+                              "data": {
+                                  "$ref": "#/definitions/Book"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "Book"
+              ],
+              "summary": "Delete book",
+              "description": "Removes the given book",
+              "operationId": "DeleteBook",
+              "security": [
+                  {
+                      "JWT": []
+                  }
+              ],
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of book to delete",
+                      "required": true,
+                      "type": "integer",
+                      "format": "int64"
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "ok",
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "success": {
+                                  "type": "boolean"
+                              },
+                              "message": {
+                                  "type": "string"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  },
+  "definitions": {
+      "NewAuthor": {
+          "type": "object",
+          "properties": {
+              "firstName": {
+                  "type": "string"
+              },
+              "lastName": {
+                  "type": "string"
+              }
+          }
+      },
+      "NewBook": {
+          "type": "object",
+          "properties": {
+              "title": {
+                  "type": "string"
+              },
+              "year": {
+                  "type": "integer",
+                  "format": "int64"
+              },
+              "pages": {
+                  "type": "integer",
+                  "format": "int64"
+              },
+              "authorId": {
+                  "type": "integer",
+                  "format": "int64"
+              }
+          }
+      },
+      "Author": {
+          "title": "Author",
+          "allOf": [
+              {
+                  "$ref": "#/definitions/NewAuthor"
+              },
+              {
+                  "type": "object",
+                  "properties": {
+                      "id": {
+                          "type": "integer",
+                          "format": "int64"
+                      },
+                      "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                      },
+                      "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                      }
+                  }
+              }
+          ]
+      },
+      "Book": {
+          "title": "Book",
+          "allOf": [
+              {
+                  "type": "object",
+                  "properties": {
+                      "id": {
+                          "type": "integer",
+                          "format": "int64"
+                      },
+                      "title": {
+                          "type": "string"
+                      },
+                      "year": {
+                          "type": "integer",
+                          "format": "int64"
+                      },
+                      "pages": {
+                          "type": "integer",
+                          "format": "int64"
+                      },
+                      "author": {
+                          "$ref": "#/definitions/Author"
+                      },
+                      "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                      },
+                      "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                      }
+                  }
+              }
+          ]
+      }
+  }
+}
