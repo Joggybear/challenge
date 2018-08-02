@@ -11,7 +11,6 @@ export class DoesAuthorExistsConstraint implements ValidatorConstraintInterface 
   public async validate(authorId: string, args: ValidationArguments): Promise<boolean> {
     const authorRepository = this.connection.getRepository('Author');
     const author = await authorRepository.findOne({ id: authorId });
-    console.log(author);
     if (!author) {
       return false;
     }

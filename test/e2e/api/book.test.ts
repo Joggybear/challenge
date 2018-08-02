@@ -73,12 +73,11 @@ describe('/api/books', () => {
   });
 
   test('POST: / should return error when creating a book with invalid authorId (author does not exists)', async (done) => {
-    const a = await request(settings.app)
+    await request(settings.app)
       .post('/api/books')
       .send({ title: 'World of warcraft', year: 2004, pages: 537, authorId: 'fake' })
       .expect('Content-Type', /json/)
       .expect(400);
-      console.log(a);
     done();
   });
 
