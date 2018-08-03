@@ -100,7 +100,7 @@ describe('BookService', () => {
     repo.one = book;
     const bookService = new BookService(repo as any, log);
     const result = await bookService.delete(book.id);
-    expect(result).toBe(true);
+    expect(result.done).toBe(true);
     done();
   });
 

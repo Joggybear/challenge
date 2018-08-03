@@ -102,6 +102,13 @@ describe('AuthorService', () => {
     done();
   });
 
+  test('should not return an author with invalid author ID', async (done) => {
+    const service = Container.get<AuthorService>(AuthorService);
+    const resultFind = await service.findOne('fake');
+    expect(resultFind).toBe(undefined);
+    done();
+  });
+
   test('should create a new author in the database', async (done) => {
     const author = new Author();
     author.firstName = 'Tino';
@@ -121,6 +128,20 @@ describe('AuthorService', () => {
     done();
   });
 
+  test('should not update author with invalid author ID', async (done) => {
+    let author = new Author();
+    author.firstName = 'Tino';
+    author.lastName = 'Ampov';
+    const service = Container.get<AuthorService>(AuthorService);
+    author = await service.create(author);
+
+    author.firstName = 'Newtino';
+    author.lastName = 'Newampov';
+    const resultUpdate = await service.update('fake', author);
+    expect(resultUpdate).toBe(undefined);
+
+    done();
+  });
   test('should update author in the database', async (done) => {
     let author = new Author();
     author.firstName = 'Tino';
@@ -144,6 +165,13 @@ describe('AuthorService', () => {
     done();
   });
 
+  test('should not delete author with invalid author ID', async (done) => {
+    const service = Container.get<AuthorService>(AuthorService);
+    const resultDelete = await service.delete('fake');
+    expect(resultDelete).toBe(undefined);
+    done();
+  });
+
   test('should delete author in the database', async (done) => {
     let author = new Author();
     author.firstName = 'Tino';
@@ -152,7 +180,7 @@ describe('AuthorService', () => {
     author = await service.create(author);
 
     const resultDelete = await service.delete(author.id);
-    expect(resultDelete).toBe(true);
+    expect(resultDelete.done).toBe(true);
 
     const resultFind = await service.findOne(author.id);
     if (!resultFind) {

@@ -18,6 +18,19 @@ describe('AuthorService', () => {
     expect(list[0].firstName).toBe(author.firstName);
     done();
   });
+  test('Find should return a list of authors with first name like', async (done) => {
+    const log = new LogMock();
+    const repo = new RepositoryMock();
+    const author = new Author();
+    author.id = '1';
+    author.firstName = 'Tino';
+    author.lastName = 'Ampov';
+    repo.list = [author];
+    const authorService = new AuthorService(repo as any, log);
+    const list = await authorService.find(author.firstName);
+    expect(list[0].firstName).toBe(author.firstName);
+    done();
+  });
 
   test('FindOne should return an author', async (done) => {
     const log = new LogMock();
@@ -79,7 +92,7 @@ describe('AuthorService', () => {
     repo.one = author;
     const authorService = new AuthorService(repo as any, log);
     const result = await authorService.delete(author.id);
-    expect(result).toBe(true);
+    expect(result.done).toBe(true);
     done();
   });
 
