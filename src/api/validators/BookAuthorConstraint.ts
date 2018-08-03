@@ -1,15 +1,11 @@
 import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
-import { Connection } from 'typeorm';
-import { InjectConnection } from 'typeorm-typedi-extensions';
+import { getRepository } from 'typeorm';
 
 @ValidatorConstraint({ async: true })
 export class DoesAuthorExistsConstraint implements ValidatorConstraintInterface {
 
-  @InjectConnection()
-  private connection: Connection;
-
   public async validate(authorId: string, args: ValidationArguments): Promise<boolean> {
-    const authorRepository = this.connection.getRepository('Author');
+    const authorRepository = getRepository('Author');
     const author = await authorRepository.findOne({ id: authorId });
     if (!author) {
       return false;

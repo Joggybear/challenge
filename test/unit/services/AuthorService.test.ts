@@ -1,13 +1,13 @@
 import { Author } from '../../../src/api/models/author';
 import { AuthorService } from '../../../src/api/services/AuthorService';
 import { LogMock } from '../lib/LogMock';
-import { RepositoryMock } from '../lib/RepositoryMock';
+import { AuthorRepositoryMock } from '../repositories/AuthorRepositoryMock';
 
 describe('AuthorService', () => {
 
   test('Find should return a list of authors', async (done) => {
     const log = new LogMock();
-    const repo = new RepositoryMock();
+    const repo = new AuthorRepositoryMock();
     const author = new Author();
     author.id = '1';
     author.firstName = 'Tino';
@@ -20,7 +20,7 @@ describe('AuthorService', () => {
   });
   test('Find should return a list of authors with first name like', async (done) => {
     const log = new LogMock();
-    const repo = new RepositoryMock();
+    const repo = new AuthorRepositoryMock();
     const author = new Author();
     author.id = '1';
     author.firstName = 'Tino';
@@ -34,7 +34,7 @@ describe('AuthorService', () => {
 
   test('FindOne should return an author', async (done) => {
     const log = new LogMock();
-    const repo = new RepositoryMock();
+    const repo = new AuthorRepositoryMock();
     const author = new Author();
     author.id = '1';
     author.firstName = 'Tino';
@@ -50,7 +50,7 @@ describe('AuthorService', () => {
 
   test('Create should return author', async (done) => {
     const log = new LogMock();
-    const repo = new RepositoryMock();
+    const repo = new AuthorRepositoryMock();
     const author = new Author();
     author.id = '1';
     author.firstName = 'Tino';
@@ -65,26 +65,25 @@ describe('AuthorService', () => {
 
   test('Update should return an updated author', async (done) => {
     const log = new LogMock();
-    const repo = new RepositoryMock();
+    const repo = new AuthorRepositoryMock();
     const author = new Author();
     author.id = '1';
     author.firstName = 'Tino';
     author.lastName = 'Ampov';
     repo.one = author;
-    const updateAuthor = new Author();
-    updateAuthor.firstName = 'Newtino';
-    updateAuthor.lastName = 'Newampov';
+    author.firstName = 'Newtino';
+    author.lastName = 'Newampov';
     const authorService = new AuthorService(repo as any, log);
-    const result = await authorService.update(author.id, updateAuthor);
+    const result = await authorService.update(author.id, author);
     expect(result.id).toBe(author.id);
-    expect(result.firstName).toBe(updateAuthor.firstName);
-    expect(result.lastName).toBe(updateAuthor.lastName);
+    expect(result.firstName).toBe(author.firstName);
+    expect(result.lastName).toBe(author.lastName);
     done();
   });
 
   test('Delete should return true', async (done) => {
     const log = new LogMock();
-    const repo = new RepositoryMock();
+    const repo = new AuthorRepositoryMock();
     const author = new Author();
     author.id = '1';
     author.firstName = 'Tino';

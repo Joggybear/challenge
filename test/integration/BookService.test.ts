@@ -85,7 +85,7 @@ describe('BookService', () => {
       expect(resultFind[0].year).toBe(book.year);
       expect(resultFind[0].pages).toBe(book.pages);
     } else {
-      fail('Could not find author');
+      fail('Could not find books');
     }
 
     done();
@@ -113,7 +113,7 @@ describe('BookService', () => {
       expect(resultFind[0].pages).toBe(book.pages);
       expect(resultFind[0].authorId).toBe(book.authorId);
     } else {
-      fail('Could not find author');
+      fail('Could not find books');
     }
 
     done();
@@ -179,7 +179,7 @@ describe('BookService', () => {
       expect(resultFind.year).toBe(book.year);
       expect(resultFind.pages).toBe(book.pages);
     } else {
-      fail('Could not find author');
+      fail('Could not find book');
     }
     done();
   });
@@ -212,7 +212,7 @@ describe('BookService', () => {
     if (!resultFind) {
       expect(resultFind).toBe(undefined);
     } else {
-      fail('Deleted author should not be found');
+      fail('Deleted book should not be found');
     }
     done();
   });
